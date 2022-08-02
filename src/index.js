@@ -5,6 +5,10 @@ const PORT = 3001
 
 // JSON express middleware
 app.use(express.json());
+app.use((req, res, next) => {
+    console.log(req.url);
+    next();
+});
 
 app.listen(PORT, () => console.log(`Running express server on port: ${PORT}`));
 
@@ -20,7 +24,7 @@ const userInfo = [
 ]
 
 // GET request
-app.get('/users', (request, response) => {
+app.get('/users', (request, response, next) => {console.log("Before Handling Requests"), next()}, (request, response) => {
     response.send(userInfo);
 })
 

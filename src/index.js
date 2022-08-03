@@ -26,7 +26,13 @@ const userInfo = [
 // GET request
 app.get('/users', (request, response, next) => {console.log("Before Handling Requests"), next()}, (request, response) => {
     response.send(userInfo);
-})
+});
+
+app.get('/user/:name', (request, response) => {
+    const { name } = request.params;
+    const user = userInfo.find(elements => elements.name === name);
+    response.send(user);
+});
 
 // POST request
 app.post('/add-user', (request, response) => {

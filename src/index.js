@@ -1,4 +1,6 @@
 const express = require("express");
+const userRouter = require('./routes/users');
+const blogRouter = require('./routes/blog');
 
 const app = express();
 const PORT = 3001
@@ -10,34 +12,7 @@ app.use((req, res, next) => {
     next();
 });
 
+app.use(userRouter);
+app.use('/blog', blogRouter);
 app.listen(PORT, () => console.log(`Running express server on port: ${PORT}`));
-
-const userInfo = [
-    {
-        name: 'somto',
-        age: 19
-    },
-    {
-        name: 'chibueze',
-        age: 21
-    }
-]
-
-// GET request
-app.get('/users', (request, response, next) => {console.log("Before Handling Requests"), next()}, (request, response) => {
-    response.send(userInfo);
-});
-
-app.get('/user/:name', (request, response) => {
-    const { name } = request.params;
-    const user = userInfo.find(elements => elements.name === name);
-    response.send(user);
-});
-
-// POST request
-app.post('/add-user', (request, response) => {
-    console.log(request.body);
-    userInfo.push(request.body);
-    response.send(201);
-});
 

@@ -1,3 +1,4 @@
+const e = require('express');
 const { Router } = require('express');
 const router = Router();
 
@@ -26,7 +27,9 @@ blogArray = [
 ]
 
 router.get('/all', (request, response) => {
-    response.cookie();
+    response.cookie('visited', true, {
+        maxAge: 10000,
+    });
     response.send(blogArray);
 });
 
@@ -46,4 +49,21 @@ router.get('/get-params', (request, response) => {
     console.log(request.query);
 });
 
+router.get('/list', (request, response) => {
+
+});
+
+router.post('/list/add', (request, response) => {
+    const { id, name, title, description, date } = request.body;
+    const listItem = { id, name, title, description, date };
+    const { new_item } = request.session;
+    if (new_item) {
+        request.session.new_item.add_ons.push(listItem);
+    } else {
+        request.session.new_item = {
+            items: [listItem],
+        };
+    }
+    response.send(201);
+})
 module.exports = router;

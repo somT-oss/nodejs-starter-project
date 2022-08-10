@@ -3,9 +3,12 @@ const session = require("express-session");
 const userRouter = require('./routes/users');
 const blogRouter = require('./routes/blog');
 const authRouter = require('./routes/auth');
+require('./database');
+
 
 const app = express();
 const PORT = 3001
+
 
 // JSON express middleware
 app.use(express.json());

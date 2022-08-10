@@ -16,7 +16,10 @@ const userInfo = [
 
 // GET request
 router.get('/users', (request, response, next) => {console.log("Before Handling Requests"), next()}, (request, response) => {
+    request.session.isAuth = true;
     response.send(userInfo);
+    console.log(request.session);
+    console.log(request.session.id);
 });
 
 router.get('/user/:name', (request, response) => {
